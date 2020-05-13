@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.chutneytesting.RestExceptionHandler;
+import com.chutneytesting.agent.domain.explore.CurrentNetworkDescription;
 import com.chutneytesting.design.domain.environment.Environment;
 import com.chutneytesting.design.domain.environment.EnvironmentNotFoundException;
 import com.chutneytesting.design.domain.environment.EnvironmentRepository;
@@ -56,7 +57,8 @@ public class EnvironmentControllerV2Test {
     private final String basePath = "/api/v2/environment";
 
     private final EnvironmentRepository environmentRepository = mock(EnvironmentRepository.class);
-    private final EnvironmentService environmentService = new EnvironmentService(environmentRepository);
+    private final CurrentNetworkDescription currentNetworkDescription = mock(CurrentNetworkDescription.class);
+    private final EnvironmentService environmentService = new EnvironmentService(environmentRepository, currentNetworkDescription);
     private final EnvironmentControllerV2 environmentControllerV2 = new EnvironmentControllerV2(environmentService);
     private final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(environmentControllerV2)
         .setControllerAdvice(new RestExceptionHandler())

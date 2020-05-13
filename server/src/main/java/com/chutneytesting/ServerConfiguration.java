@@ -1,6 +1,7 @@
 package com.chutneytesting;
 
 import com.chutneytesting.agent.domain.configure.LocalServerIdentifier;
+import com.chutneytesting.agent.domain.explore.CurrentNetworkDescription;
 import com.chutneytesting.design.domain.campaign.CampaignRepository;
 import com.chutneytesting.design.domain.dataset.DataSetHistoryRepository;
 import com.chutneytesting.design.domain.environment.EnvironmentRepository;
@@ -124,8 +125,8 @@ public class ServerConfiguration {
     }
 
     @Bean
-    EnvironmentService environmentService(EnvironmentRepository environmentRepository) {
-        return new EnvironmentService(environmentRepository);
+    EnvironmentService environmentService(EnvironmentRepository environmentRepository, CurrentNetworkDescription currentNetworkDescription) {
+        return new EnvironmentService(environmentRepository, currentNetworkDescription);
     }
 
     @Bean
