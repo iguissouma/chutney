@@ -12,6 +12,7 @@ Feature: Engine tasks exposition
             | amqp-delete-queue                 | queue-name,java.lang.String                                                                                                                                   |
             | amqp-unbind-queue                 | exchange-name,java.lang.String routing-key,java.lang.String queue-name,java.lang.String                                                                       |
             | assert                            | asserts,java.util.List                                                                                                                                        |
+            | compare                           | actual,java.lang.String expected,java.lang.String mode,java.lang.String                                                                                       |
             | json-assert                       | document,java.lang.String expected,java.util.Map                                                                                                              |
             | json-compare                      | document1,java.lang.String document2,java.lang.String comparingPaths,java.util.Map                                                                            |
             | json-validation                   | json,java.lang.String schema,java.lang.String                                                                                                                 |
@@ -19,7 +20,7 @@ Feature: Engine tasks exposition
             | xml-assert                        | document,java.lang.String expected,java.util.Map                                                                                                              |
             | xsd-validation                    | xml,java.lang.String xsd,java.lang.String                                                                                                                     |
             | context-put                       | entries,java.util.Map                                                                                                                                         |
-            | debug                             | filters,java.util.List                                                                                                                                         |
+            | debug                             | filters,java.util.List                                                                                                                                        |
             | fail                              |                                                                                                                                                               |
             | sleep                             | duration,java.lang.String                                                                                                                                     |
             | success                           |                                                                                                                                                               |
@@ -28,6 +29,7 @@ Feature: Engine tasks exposition
             | http-get                          | uri,java.lang.String headers,java.util.Map timeout,java.lang.String                                                                                           |
             | http-post                         | uri,java.lang.String body,java.lang.String headers,java.util.Map timeout,java.lang.String                                                                     |
             | http-put                          | uri,java.lang.String body,java.lang.String headers,java.util.Map timeout,java.lang.String                                                                     |
+            | http-soap                         | uri,java.lang.String body,java.lang.String username,java.lang.String password,java.lang.String timeout,java.lang.String                                       |
             | https-listener                    | https-server,com.github.tomakehurst.wiremock.WireMockServer uri,java.lang.String verb,java.lang.String expected-message-count,java.lang.String                |
             | https-server-start                | port,java.lang.String truststore-path,java.lang.String truststore-password,java.lang.String keystore-path,java.lang.String keystore-password,java.lang.String |
             | https-server-stop                 | https-server,com.github.tomakehurst.wiremock.WireMockServer                                                                                                   |
@@ -73,6 +75,7 @@ Feature: Engine tasks exposition
             | amqp-delete-queue                 | queue-name,java.lang.String                                                                                                                                   |
             | amqp-unbind-queue                 | exchange-name,java.lang.String routing-key,java.lang.String queue-name,java.lang.String                                                                       |
             | assert                            | asserts,java.util.List                                                                                                                                        |
+            | compare                           | actual,java.lang.String expected,java.lang.String mode,java.lang.String                                                                                       |
             | json-assert                       | document,java.lang.String expected,java.util.Map                                                                                                              |
             | json-compare                      | document1,java.lang.String document2,java.lang.String comparingPaths,java.util.Map                                                                            |
             | json-validation                   | json,java.lang.String schema,java.lang.String                                                                                                                 |
@@ -80,7 +83,7 @@ Feature: Engine tasks exposition
             | xml-assert                        | document,java.lang.String expected,java.util.Map                                                                                                              |
             | xsd-validation                    | xml,java.lang.String xsd,java.lang.String                                                                                                                     |
             | context-put                       | entries,java.util.Map                                                                                                                                         |
-            | debug                             | filters,java.util.List                                                                                                                                         |
+            | debug                             | filters,java.util.List                                                                                                                                        |
             | fail                              |                                                                                                                                                               |
             | sleep                             | duration,java.lang.String                                                                                                                                     |
             | success                           |                                                                                                                                                               |
@@ -89,6 +92,7 @@ Feature: Engine tasks exposition
             | http-get                          | uri,java.lang.String headers,java.util.Map timeout,java.lang.String                                                                                           |
             | http-post                         | uri,java.lang.String body,java.lang.String headers,java.util.Map timeout,java.lang.String                                                                     |
             | http-put                          | uri,java.lang.String body,java.lang.String headers,java.util.Map timeout,java.lang.String                                                                     |
+            | http-soap                         | uri,java.lang.String body,java.lang.String username,java.lang.String password,java.lang.String timeout,java.lang.String                                       |
             | https-listener                    | https-server,com.github.tomakehurst.wiremock.WireMockServer uri,java.lang.String verb,java.lang.String expected-message-count,java.lang.String                |
             | https-server-start                | port,java.lang.String truststore-path,java.lang.String truststore-password,java.lang.String keystore-path,java.lang.String keystore-password,java.lang.String |
             | https-server-stop                 | https-server,com.github.tomakehurst.wiremock.WireMockServer                                                                                                   |
