@@ -6,6 +6,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.AdditionalMatchers.or;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,7 +33,6 @@ import com.chutneytesting.execution.domain.ExecutionRequest;
 import com.chutneytesting.execution.domain.history.ExecutionHistory;
 import com.chutneytesting.execution.domain.history.ExecutionHistoryRepository;
 import com.chutneytesting.execution.domain.history.ImmutableExecutionHistory;
-import com.chutneytesting.execution.domain.jira.JiraXrayPlugin;
 import com.chutneytesting.execution.domain.report.ScenarioExecutionReport;
 import com.chutneytesting.execution.domain.report.ServerReportStatus;
 import com.chutneytesting.execution.domain.scenario.ScenarioExecutionEngine;
@@ -47,29 +47,24 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import org.apache.groovy.util.Maps;
 import org.assertj.core.util.Lists;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StopWatch;
 
-@RunWith(MockitoJUnitRunner.class)
 public class CampaignExecutionEngineTest {
 
     private CampaignExecutionEngine sut;
 
-    @Mock private CampaignRepository campaignRepository;
-    @Mock private ScenarioExecutionEngine scenarioExecutionEngine;
-    @Mock private ExecutionHistoryRepository executionHistoryRepository;
-    @Mock private TestCaseRepository testCaseRepository;
-    @Mock private DataSetHistoryRepository dataSetHistoryRepository;
-    @Mock private JiraXrayPlugin jiraXrayPlugin;
+    private CampaignRepository campaignRepository = mock(CampaignRepository.class);
+    private ScenarioExecutionEngine scenarioExecutionEngine = mock(ScenarioExecutionEngine.class);
+    private ExecutionHistoryRepository executionHistoryRepository = mock(ExecutionHistoryRepository.class);
+    private TestCaseRepository testCaseRepository = mock(TestCaseRepository.class);
+    private DataSetHistoryRepository dataSetHistoryRepository = mock(DataSetHistoryRepository.class);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         sut = new CampaignExecutionEngine(campaignRepository, scenarioExecutionEngine, executionHistoryRepository, testCaseRepository, dataSetHistoryRepository, jiraXrayPlugin);
     }
@@ -227,13 +222,14 @@ public class CampaignExecutionEngineTest {
         assertThat(watch.getTotalTimeSeconds()).isLessThan(1.9);
     }
 
-    @Test(expected = CampaignNotFoundException.class)
+    @Test
     public void should_throw_when_no_campaign_found_on_execute_by_id() {
         when(campaignRepository.findById(anyLong())).thenReturn(null);
-        sut.executeById(generateId(), "");
+        assertThatThrownBy(() -> sut.executeById(generateId(), ""))
+            .isInstanceOf(CampaignNotFoundException.class);
     }
 
-    @Test(expected = CampaignAlreadyRunningException.class)
+    @Test
     public void should_throw_when_campaign_already_running() {
         Campaign campaign = createCampaign(1L);
 
@@ -244,7 +240,8 @@ public class CampaignExecutionEngineTest {
         field.put(1L, mockReport);
 
         // When
-        sut.executeScenarioInCampaign(null, campaign, "user");
+        assertThatThrownBy(() -> sut.executeScenarioInCampaign(null, campaign, "user"))
+            .isInstanceOf(CampaignAlreadyRunningException.class);
     }
 
     @Test
@@ -315,13 +312,16 @@ public class CampaignExecutionEngineTest {
         assertThat(campaignExecutionReport.get().campaignId).isEqualTo(33L);
     }
 
-    @Test(expected = CampaignExecutionNotFoundException.class)
+    @Test
     public void should_throw_when_stop_unknown_campaign_execution() {
-        sut.stopExecution(generateId());
+        assertThatThrownBy(() -> sut.stopExecution(generateId()))
+            .isInstanceOf(CampaignExecutionNotFoundException.class);
     }
 
-    @Test(expected = CampaignNotFoundException.class)
+    @Test
     public void should_throw_when_execute_unknown_campaign_execution() {
+        assertThatThrownBy(() -> sut.executeById(generateId(), ""))
+            .isInstanceOf(CampaignNotFoundException.class);
         sut.executeById(generateId(), "");
     }
 

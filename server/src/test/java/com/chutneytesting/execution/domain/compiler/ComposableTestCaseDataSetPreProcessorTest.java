@@ -24,20 +24,17 @@ import com.chutneytesting.engine.domain.execution.strategies.SoftAssertStrategy;
 import com.chutneytesting.execution.domain.ExecutionRequest;
 import java.util.List;
 import java.util.Map;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
 import org.apache.groovy.util.Maps;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(JUnitParamsRunner.class)
 public class ComposableTestCaseDataSetPreProcessorTest {
 
     private DataSetRepository dataSetRepository;
     private String dataSetId;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         dataSetId = "dataSetId";
         dataSetRepository = mock(DataSetRepository.class);
@@ -256,7 +253,7 @@ public class ComposableTestCaseDataSetPreProcessorTest {
     }
 
     @Test
-    @Parameters(method = "strategyDefinitions")
+    @MethodSource("strategyDefinitions")
     public void iterations_strategy_inherit_from_parent_strategy_definition(Strategy strategyDefinition) {
         // Given
         List<Map<String, String>> multipleValues = asList(

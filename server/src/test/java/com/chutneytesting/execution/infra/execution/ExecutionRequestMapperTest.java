@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.apache.groovy.util.Maps;
 import org.assertj.core.util.Files;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ExecutionRequestMapperTest {
 
