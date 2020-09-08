@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -9,28 +8,27 @@ import { map } from 'rxjs/operators';
 })
 export class PluginManagerService {
 
-    private url = '/api/ui/plugins/v1/';
+    private url = '/api/ui/plugins/v1';
 
     constructor(private http: HttpClient) {
     }
 
-    public getDefinition(pluginId: string) {
-        return this.http.get<Object>(environment.backend + this.url + pluginId).pipe(map((res: Object) => {
+    public getDefinition(pluginName: string) {
+        return this.http.get<Object>(environment.backend + this.url + pluginName).pipe(map((res: Object) => {
             return res;
         }));
     }
 
     public getDefinitions(page: string, section: string) {
         let params = new HttpParams();
-        params = params.append('page', page);
         params = params.append('section', section);
 
-        return this.http.get<Object>(environment.backend + this.url, { params: params }).pipe(map((res: Object) => {
+        return this.http.get<Object>(environment.backend + this.url + "/page/" + page , { params: params }).pipe(map((res: Object) => {
             return res;
         }));
     }
 
-    public listPlugins(page: string, section: string) {
+    public listPlugins() {
         return this.http.get<Object>(environment.backend + this.url).pipe(map((res: Object) => {
             return res;
         }));

@@ -10,7 +10,7 @@ export class PluginManagerComponent {
     @Input() page: string;
     @Input() section: string;
 
-    plugins: any;
+    definitions: any;
 
     constructor(private pluginManagerService: PluginManagerService) {
     }
@@ -18,7 +18,7 @@ export class PluginManagerComponent {
     ngOnInit(): void {
         this.pluginManagerService.getDefinitions(this.page, this.section).subscribe(
             (res) => {
-                this.plugins = res;
+                this.definitions = res;
             },
             (error) => console.log(error)
         );
