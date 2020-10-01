@@ -27,6 +27,7 @@ import java.util.Map;
 import org.apache.groovy.util.Maps;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class ComposableTestCaseDataSetPreProcessorTest {
@@ -252,7 +253,7 @@ public class ComposableTestCaseDataSetPreProcessorTest {
         );
     }
 
-    @Test
+    @ParameterizedTest
     @MethodSource("strategyDefinitions")
     public void iterations_strategy_inherit_from_parent_strategy_definition(Strategy strategyDefinition) {
         // Given

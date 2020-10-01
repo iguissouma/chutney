@@ -1,6 +1,8 @@
 package blackbox;
 
+import com.chutneytesting.design.domain.environment.AlreadyExistingEnvironmentException;
 import com.chutneytesting.design.domain.environment.Environment;
+import com.chutneytesting.design.domain.environment.SecurityInfo;
 import com.chutneytesting.design.domain.environment.Target;
 import com.chutneytesting.junit.api.AfterAll;
 import com.chutneytesting.junit.api.BeforeAll;
@@ -25,6 +27,7 @@ public class ChutneyIT {
     private Path tmpFolder;
 
     private EnvironmentService environmentService;
+    private static final String TEST_ENV_NAME = "ENV";
 
     public ChutneyIT(EnvironmentService environmentService) throws IOException {
         this.environmentService = environmentService;
@@ -36,11 +39,11 @@ public class ChutneyIT {
         tmpFolder = Files.createTempDirectory("chutney");
         tmpFolder.toFile().createNewFile();
 
-        setEnvironment(securePort);
+        setEnvironment();
     }
 
     @BeforeAll
-    public void setUp() throws IOException {
+    public void setUp() {
         Path tmpConfDir = tmpFolder.resolve("conf");
 
         System.setProperty("port", String.valueOf(port));
@@ -74,30 +77,38 @@ public class ChutneyIT {
         return new Integer[]{rangeMin, rangeMin + range};
     }
 
-    private void setEnvironment(int securePort) {
-        String envName = "ENV";
 
-        environmentService.addEnvironment(Environment.builder().withName(envName).build());
+    private void setEnvironment() {
+        try {
+            initEnvironment();
+        } catch (AlreadyExistingEnvironmentException aeee) {
+            cleanEnvironment();
+            initEnvironment();
+        }
 
-        addChutneyLocalServer(envName);
-        addChutneyDBServer(envName);
+        addChutneyLocalServer();
+        addChutneyDBServer();
     }
 
-    private void addChutneyLocalServer(String envName) {
-        environmentService.addTarget(envName,
+    private void addChutneyLocalServer() {
+        environmentService.addTarget(TEST_ENV_NAME,
             Target.builder()
-                .withId(Target.TargetId.of("CHUTNEY_LOCAL", envName))
+                .withId(Target.TargetId.of("CHUTNEY_LOCAL", TEST_ENV_NAME))
                 .withUrl("https://localhost:" + securePort)
+                .withSecurity(
+                    SecurityInfo.builder()
+                        .credential(SecurityInfo.Credential.of("user", "user"))
+                    .build())
                 .build()
         );
     }
 
-    private void addChutneyDBServer(String envName) {
+    private void addChutneyDBServer() {
         Target dbTarget;
         String spring_profiles_active = System.getenv("SPRING_PROFILES_ACTIVE");
         if (spring_profiles_active != null && spring_profiles_active.contains("db-pg")) { // Check H2 or Postgres
             dbTarget = Target.builder()
-                .withId(Target.TargetId.of("CHUTNEY_DB", envName))
+                .withId(Target.TargetId.of("CHUTNEY_DB", TEST_ENV_NAME))
                 .withUrl("tcp://localhost:" + dbPort)
                 .withProperties(
                     Maps.of(
@@ -111,7 +122,7 @@ public class ChutneyIT {
                 .build();
         } else { // H2 by default
             dbTarget = Target.builder()
-                .withId(Target.TargetId.of("CHUTNEY_DB", envName))
+                .withId(Target.TargetId.of("CHUTNEY_DB", TEST_ENV_NAME))
                 .withUrl("tcp://localhost:" + dbPort)
                 .withProperties(
                     Maps.of(
@@ -125,10 +136,14 @@ public class ChutneyIT {
                 .build();
         }
 
-        environmentService.addTarget(envName, dbTarget);
+        environmentService.addTarget(ChutneyIT.TEST_ENV_NAME, dbTarget);
+    }
+
+    private void initEnvironment() {
+        environmentService.addEnvironment(Environment.builder().withName(TEST_ENV_NAME).build());
     }
 
     private void cleanEnvironment() {
-        environmentService.deleteEnvironment("ENV");
+        environmentService.deleteEnvironment(TEST_ENV_NAME);
     }
 }

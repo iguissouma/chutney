@@ -127,7 +127,7 @@ Feature: HTTP Task test
                         "when":{
                             "sentence":"Make <verb> request",
                             "implementation":{
-                                "task":"{\n type: http-${'<verb>'.toLowerCase()} \n target: test_http \n inputs: {\n <task_inputs> \n timeout: 500 ms \n} \n}"
+                                "task":"{\n type: http-${'<verb>'.toLowerCase()} \n target: test_http \n inputs: {\n <task_inputs> \n timeout: 5000 ms \n} \n}"
                             }
                         },
                         "thens":[

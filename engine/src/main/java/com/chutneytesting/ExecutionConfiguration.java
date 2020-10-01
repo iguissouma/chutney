@@ -71,6 +71,10 @@ public class ExecutionConfiguration {
         return embeddedTestEngine;
     }
 
+    public Set<StepExecutionStrategy> stepExecutionStrategies() {
+        return stepExecutionStrategies;
+    }
+
     public Reporter reporter() {
         return reporter;
     }

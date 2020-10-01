@@ -34,6 +34,6 @@ Feature: Engine tasks exposition
 
         Examples:
             | task-id | inputs                                                                                                                                      |
-            | debug   | []                                                                                                                                          |
+            | debug   | [{"name": "filters","type": "java.util.List"}]                                                                                              |
             | assert  | [{"name": "asserts","type": "java.util.List"}]                                                                                              |
             | compare | [{"name": "actual","type": "java.lang.String"},{"name": "expected","type": "java.lang.String"},{"name": "mode","type": "java.lang.String"}] |

@@ -62,7 +62,7 @@ Feature: Replace scenario parameters with data set or global var values
                 {
                     "title": "GWT testcase with parameters for global vars",
                     "tags": [],
-                    "dataSet": {
+                    "computedParameters": {
                         "testcase parameter quote": "**escape.quote**",
                         "testcase parameter apostrophe": "**escape.apostrophe**"
                     },
@@ -211,7 +211,7 @@ Feature: Replace scenario parameters with data set or global var values
                         "parameters": {
                         }
                     },
-                    "dataSet": [],
+                    "computedParameters": [],
                     "tags": []
                 }
                 """
@@ -248,7 +248,7 @@ Feature: Replace scenario parameters with data set or global var values
                         "parameters": {
                         }
                     },
-                    "dataSet": [],
+                    "computedParameters": [],
                     "tags": []
                 }
                 """
@@ -301,7 +301,7 @@ Feature: Replace scenario parameters with data set or global var values
                                     "parameters": {
                                     }
                                 },
-                                "dataSet": [
+                                "computedParameters": [
                                     {
                                         "key": "key",
                                         "value": "slash"
@@ -334,7 +334,7 @@ Feature: Replace scenario parameters with data set or global var values
                                     "parameters": {
                                     }
                                 },
-                                "dataSet": [
+                                "computedParameters": [
                                     {
                                         "key": "actual",
                                         "value": "\${#slash}"
@@ -367,7 +367,7 @@ Feature: Replace scenario parameters with data set or global var values
                                     "parameters": {
                                     }
                                 },
-                                "dataSet": [
+                                "computedParameters": [
                                     {
                                         "key": "key",
                                         "value": "apostrophe"
@@ -400,7 +400,7 @@ Feature: Replace scenario parameters with data set or global var values
                                     "parameters": {
                                     }
                                 },
-                                "dataSet": [
+                                "computedParameters": [
                                     {
                                         "key": "actual",
                                         "value": "\${#apostrophe}"
@@ -433,7 +433,7 @@ Feature: Replace scenario parameters with data set or global var values
                                     "parameters": {
                                     }
                                 },
-                                "dataSet": [
+                                "computedParameters": [
                                     {
                                         "key": "key",
                                         "value": "quote"
@@ -466,7 +466,7 @@ Feature: Replace scenario parameters with data set or global var values
                                     "parameters": {
                                     }
                                 },
-                                "dataSet": [
+                                "computedParameters": [
                                     {
                                         "key": "actual",
                                         "value": "\${#quote}"
@@ -499,7 +499,7 @@ Feature: Replace scenario parameters with data set or global var values
                                     "parameters": {
                                     }
                                 },
-                                "dataSet": [
+                                "computedParameters": [
                                     {
                                         "key": "key",
                                         "value": "backslash"
@@ -532,7 +532,7 @@ Feature: Replace scenario parameters with data set or global var values
                                     "parameters": {
                                     }
                                 },
-                                "dataSet": [
+                                "computedParameters": [
                                     {
                                         "key": "actual",
                                         "value": "\${#backslash}"
@@ -546,7 +546,7 @@ Feature: Replace scenario parameters with data set or global var values
                             }
                         ]
                     },
-                    "dataSet": [],
+                    "computedParameters": [],
                     "tags": []
                 }
                 """

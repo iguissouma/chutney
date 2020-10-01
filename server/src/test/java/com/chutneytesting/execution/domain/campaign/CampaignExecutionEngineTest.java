@@ -33,6 +33,7 @@ import com.chutneytesting.execution.domain.ExecutionRequest;
 import com.chutneytesting.execution.domain.history.ExecutionHistory;
 import com.chutneytesting.execution.domain.history.ExecutionHistoryRepository;
 import com.chutneytesting.execution.domain.history.ImmutableExecutionHistory;
+import com.chutneytesting.execution.domain.jira.JiraXrayPlugin;
 import com.chutneytesting.execution.domain.report.ScenarioExecutionReport;
 import com.chutneytesting.execution.domain.report.ServerReportStatus;
 import com.chutneytesting.execution.domain.scenario.ScenarioExecutionEngine;
@@ -63,6 +64,7 @@ public class CampaignExecutionEngineTest {
     private ExecutionHistoryRepository executionHistoryRepository = mock(ExecutionHistoryRepository.class);
     private TestCaseRepository testCaseRepository = mock(TestCaseRepository.class);
     private DataSetHistoryRepository dataSetHistoryRepository = mock(DataSetHistoryRepository.class);
+    private JiraXrayPlugin jiraXrayPlugin = mock(JiraXrayPlugin.class);
 
     @BeforeEach
     public void setUp() {
@@ -322,7 +324,6 @@ public class CampaignExecutionEngineTest {
     public void should_throw_when_execute_unknown_campaign_execution() {
         assertThatThrownBy(() -> sut.executeById(generateId(), ""))
             .isInstanceOf(CampaignNotFoundException.class);
-        sut.executeById(generateId(), "");
     }
 
     @Test

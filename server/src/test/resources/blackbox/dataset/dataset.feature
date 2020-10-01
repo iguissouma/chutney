@@ -48,6 +48,7 @@ Feature: Dataset management
         """
         Then the dataset last version number is 2
         And the list of version numbers is
-        | 1 | 2 |
+        | 1 |
+        | 2 |
         And the search for the dataset bring the last version
         And the dataset version 1 can be found

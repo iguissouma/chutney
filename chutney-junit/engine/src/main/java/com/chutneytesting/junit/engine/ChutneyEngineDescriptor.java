@@ -33,6 +33,8 @@ public class ChutneyEngineDescriptor extends EngineDescriptor implements Node<Ch
         invokeHook(AfterAll.class);
     }
 
+
+
     private void invokeHook(Class<? extends Annotation> annotationType) throws ReflectiveOperationException {
         if (!this.children.isEmpty() && chutneyClass.isPresent()) {
             Object chutneyClassInstance = chutneyClass.get();
