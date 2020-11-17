@@ -1,0 +1,8 @@
+query campaignsLastExecutions {
+  campaignsLastExecutions @rest(type: "CampaignsLastExecution", path: "api/ui/campaign/v1/lastexecutions/10") {
+    executionId
+    campaignName
+    startDate
+    status
+  }
+}

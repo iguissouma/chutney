@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+
+.content {
+  flex: 1 1 auto;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.file-uploader{
+  position: absolute;
+  top: 35%;
+}
+.add-file-button {
+  position: absolute;
+  left: 16px;
+  z-index: 999;
+}

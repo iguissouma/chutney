@@ -23,6 +23,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { MatTreeModule } from '@angular/material/tree';
     MatAutocompleteModule,
     MatTreeModule,
     MatSlideToggleModule,
+    MatFormFieldModule,
     /** Covalent Modules */
     CovalentDialogsModule,
     CovalentSearchModule,
@@ -76,6 +78,7 @@ import { MatTreeModule } from '@angular/material/tree';
     MatAutocompleteModule,
     MatTreeModule,
     MatSlideToggleModule,
+    MatFormFieldModule,
     /** Covalent Modules */
     CovalentDialogsModule,
     CovalentSearchModule,

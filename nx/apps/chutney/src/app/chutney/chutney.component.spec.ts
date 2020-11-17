@@ -1,34 +1,31 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ApolloTestingModule } from 'apollo-angular/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UiLayoutModule } from '../../../../libs/ui-layout/src';
 import { ChutneyComponent } from './chutney.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('AppComponent', () => {
+describe('ChutneyComponent', () => {
+  let component: ChutneyComponent
+  let fixture: ComponentFixture<ChutneyComponent>;
   beforeEach(async () => {
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        UiLayoutModule,
-        BrowserAnimationsModule,
-        ApolloTestingModule,
-      ],
+    await TestBed.configureTestingModule({
       declarations: [ChutneyComponent],
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents();
+  });
+
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ChutneyComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(ChutneyComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it(`should have as title 'chutney'`, () => {
-    const fixture = TestBed.createComponent(ChutneyComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('chutney');
+    expect(component.title).toEqual('chutney');
   });
 });

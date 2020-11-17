@@ -42,12 +42,27 @@ type ScenariosFilter {
   advanced: Boolean
 }
 
+type Campaign {
+  id: ID!
+  title: String!
+  description: String!
+}
+
+type CampaignsLastExecution {
+  executionId: ID!
+  campaignName: String!
+  startDate: String!
+  status: String!
+}
+
 type Query {
   user: User
   scenarios: [Scenario]
   scenariosFilter: ScenariosFilter
   scenario(scenarioId: ID!): Scenario
   runScenarioHistory(scenarioId: ID!, executionId: ID!): ScenarioExecution!
+  campaigns: [Campaign]
+  campaignsLastExecutions: [CampaignsLastExecution]
 }
 
 type Mutation {

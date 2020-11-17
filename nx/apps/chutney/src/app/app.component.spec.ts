@@ -1,34 +1,30 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ApolloTestingModule } from 'apollo-angular/testing';
-
-import { UiLayoutModule } from '../../../../libs/ui-layout/src';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {
+  let component: AppComponent
+  let fixture: ComponentFixture<AppComponent>;
   beforeEach(async () => {
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        UiLayoutModule,
-        BrowserAnimationsModule,
-        ApolloTestingModule,
-      ],
+    await TestBed.configureTestingModule({
       declarations: [AppComponent],
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents();
+  });
+
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it(`should have as title 'chutney'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('chutney');
+    expect(component.title).toEqual('chutney');
   });
 });
