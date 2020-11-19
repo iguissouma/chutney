@@ -26,8 +26,6 @@ export class ExecutionsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.campaignsLastExecutionsGQL.watch().valueChanges.pipe(pluck('data', 'campaignsLastExecution')).subscribe((result: CampaignsLastExecution[]) => {
-      console.log('result');
-      console.log(result);
       this.campaignsLastExecution = result;
       this._campaignsLastExecutionsDataSource.data = result;
     })

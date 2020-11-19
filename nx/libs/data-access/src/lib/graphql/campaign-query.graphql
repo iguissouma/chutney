@@ -1,0 +1,41 @@
+query campaign($campaignId: ID!){
+  campaign(campaignId: $campaignId) @rest(type: "CampaignDetails", path: "api/ui/campaign/v1/{args.campaignId}"){
+    id
+    title
+    description
+    scheduleTime
+    environment
+    parallelRun
+    retryAuto
+    datasetId
+    scenarioIds
+    campaignExecutionReports @type(name: "CampaignExecutionReport"){
+      __typename
+      executionId
+      campaignName
+      startDate
+      status
+      partialExecution
+      executionEnvironment
+      userId
+      scenarioExecutionReports @type(name: "ScenarioExecutionReportOutline"){
+        __typename
+        scenarioId
+        scenarioName
+        execution @type(name: "ExecutionSummary"){
+          __typename
+          time
+          duration
+          status
+          info
+          error
+          testCaseTitle
+          environment
+          datasetId
+          datasetVersion
+          user
+        }
+      }
+    }
+  }
+}

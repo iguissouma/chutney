@@ -9,6 +9,7 @@
     "start": "ng serve",
     "build": "ng build --base-href /new --deploy-url /new/",
     "test": "ng test",
+    "test-jest": "jest --watchAll --noStackTrace",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
     "affected:apps": "nx affected:apps",

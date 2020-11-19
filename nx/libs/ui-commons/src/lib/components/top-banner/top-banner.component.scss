@@ -1,0 +1,17 @@
+.header {
+  /*to be removed (generic) */
+  background-color: #039be5;
+  padding: 50px;
+}
+.screen-title{
+  padding-left: 24px !important;
+  color: #fff;
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    line-height: 24px;
+  }
+}

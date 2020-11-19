@@ -7,6 +7,7 @@ import { UiMaterialModule } from '@chutney/ui-material';
 import { UiCommonsModule } from '@chutney/ui-commons';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ExecutionsListComponent', () => {
   let component: ExecutionsListComponent;
@@ -20,13 +21,14 @@ describe('ExecutionsListComponent', () => {
         UiCommonsModule,
         CommonModule,
         ReactiveFormsModule,
-      ],
-      declarations: [ExecutionsListComponent],
-      providers: [
-        {provide: CampaignsLastExecutionsGQL, useValue: {campaigns: jest.fn()}},
+        NoopAnimationsModule,
       ],
       schemas: [
         NO_ERRORS_SCHEMA,
+      ],
+      declarations: [ExecutionsListComponent],
+      providers: [
+        {provide: CampaignsLastExecutionsGQL, useValue: {valueChanges: jest.fn()}},
       ],
     })
       .compileComponents();

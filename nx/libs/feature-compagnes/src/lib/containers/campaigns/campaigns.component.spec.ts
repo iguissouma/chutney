@@ -7,6 +7,7 @@ import { UiMaterialModule } from '@chutney/ui-material';
 import { UiCommonsModule } from '@chutney/ui-commons';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
@@ -15,10 +16,7 @@ describe('CampaignsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        UiMaterialModule,
-        UiCommonsModule,
-        CommonModule,
-        ReactiveFormsModule,
+        NoopAnimationsModule,
       ],
       declarations: [CampaignsComponent],
       schemas: [NO_ERRORS_SCHEMA],

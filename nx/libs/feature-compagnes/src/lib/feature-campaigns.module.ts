@@ -7,6 +7,8 @@ import { UiMaterialModule } from '@chutney/ui-material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CampaignsListComponent } from './components/campaigns-list/campaigns-list.component';
 import { ExecutionsListComponent } from './components/executions-list/executions-list.component';
+import { CampaignDetailsComponent } from './containers/camapign-details/campaign-details.component';
+import { CampaignFormComponent } from './components/campaign-form/campaign-form.component';
 
 @NgModule({
   imports: [
@@ -14,10 +16,12 @@ import { ExecutionsListComponent } from './components/executions-list/executions
     UiCommonsModule,
     RouterModule.forChild([
       { path: '', component: CampaignsComponent },
+      { path: 'create', component: CampaignDetailsComponent },
+      { path: ':id/edit', component: CampaignDetailsComponent },
     ]),
     UiMaterialModule,
     ReactiveFormsModule,
   ],
-  declarations: [CampaignsComponent, CampaignsListComponent, ExecutionsListComponent],
+  declarations: [CampaignsComponent, CampaignsListComponent, ExecutionsListComponent, CampaignDetailsComponent, CampaignFormComponent],
 })
 export class FeatureCampaignsModule {}

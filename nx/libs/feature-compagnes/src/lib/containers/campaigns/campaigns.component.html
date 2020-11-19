@@ -1,29 +1,27 @@
-<div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-  <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start"
-       fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
-    <div class="screen-title" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon class="mr-16">video_library</mat-icon>
-        <span class="h1">Campaigns</span>
-    </div>
-    <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
-      <div class="search-wrapper mt-16 mt-sm-0">
-        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon>search</mat-icon>
-          <input placeholder="Search for a campaign">
-        </div>
-      </div>
-    </div>
-    <div class="file-uploader">
-      <button mat-fab color="warn" class="add-file-button" aria-label="Add campaign">
-        <mat-icon>add</mat-icon>
-      </button>
+<chutney-top-banner title="Campaigns" icon="video_library"></chutney-top-banner>
+
+<div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center">
+  <div class="search-wrapper mt-16 mt-sm-0">
+    <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon>search</mat-icon>
+      <input placeholder="Search for a campaign" [formControl]="filterControl" (keyup)="applyFilter()">
     </div>
   </div>
+</div>
 
-<div class="content">
+<div class="file-uploader">
+  <button mat-fab color="warn" class="add-file-button" aria-label="Add campaign" (click)="createCampaign()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+<div>
   <div fxFlex="66.67" fxFlex.lt-sm="100" class="chuteny-col">
     <mat-card>
-      <chutney-campaigns-list></chutney-campaigns-list>
+      <chutney-campaigns-list
+        [campaigns]="filteredCampaigns$ | async"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)">
+      </chutney-campaigns-list>
     </mat-card>
   </div>
   <div fxFlex="33.33" fxFlex.lt-sm="100" class="chutney-col-left-only">
@@ -31,5 +29,4 @@
       <chutney-executions-list></chutney-executions-list>
     </mat-card>
   </div>
-</div>
 </div>

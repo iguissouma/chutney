@@ -56,6 +56,7 @@ const filterArrayByString = (mainArr, searchText): any => {
  * @returns {boolean}
  */
 const searchInObj = (itemObj, searchText): boolean => {
+  searchText = searchText? searchText : '';
   for (const prop in itemObj) {
     if (!itemObj.hasOwnProperty(prop)) {
       continue;

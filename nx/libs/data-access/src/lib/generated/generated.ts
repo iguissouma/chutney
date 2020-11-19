@@ -74,6 +74,53 @@ export type Campaign = {
   description: Scalars['String'];
 };
 
+export type ExecutionSummary = {
+  __typename?: 'ExecutionSummary';
+  time: Scalars['String'];
+  duration: Scalars['Int'];
+  status: Scalars['String'];
+  info: Scalars['String'];
+  error: Scalars['String'];
+  testCaseTitle: Scalars['String'];
+  environment: Scalars['String'];
+  datasetId: Scalars['String'];
+  datasetVersion: Scalars['String'];
+  user: Scalars['String'];
+};
+
+export type ScenarioExecutionReportOutline = {
+  __typename?: 'ScenarioExecutionReportOutline';
+  scenarioId: Scalars['String'];
+  scenarioName: Scalars['String'];
+  execution: ExecutionSummary;
+};
+
+export type CampaignExecutionReport = {
+  __typename?: 'CampaignExecutionReport';
+  executionId: Scalars['ID'];
+  campaignName: Scalars['String'];
+  startDate: Scalars['String'];
+  status: Scalars['String'];
+  scenarioExecutionReports: Array<Maybe<ScenarioExecutionReportOutline>>;
+  partialExecution: Scalars['Boolean'];
+  executionEnvironment: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+export type CampaignDetails = {
+  __typename?: 'CampaignDetails';
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  description: Scalars['String'];
+  scheduleTime: Scalars['String'];
+  environment: Scalars['String'];
+  parallelRun: Scalars['Boolean'];
+  retryAuto: Scalars['Boolean'];
+  datasetId: Scalars['String'];
+  scenarioIds: Array<Maybe<Scalars['String']>>;
+  campaignExecutionReports: Array<Maybe<CampaignExecutionReport>>;
+};
+
 export type CampaignsLastExecution = {
   __typename?: 'CampaignsLastExecution';
   executionId: Scalars['ID'];
@@ -91,6 +138,7 @@ export type Query = {
   runScenarioHistory: ScenarioExecution;
   campaigns?: Maybe<Array<Maybe<Campaign>>>;
   campaignsLastExecutions?: Maybe<Array<Maybe<CampaignsLastExecution>>>;
+  campaign?: Maybe<CampaignDetails>;
 };
 
 
@@ -104,11 +152,17 @@ export type QueryRunScenarioHistoryArgs = {
   executionId: Scalars['ID'];
 };
 
+
+export type QueryCampaignArgs = {
+  campaignId: Scalars['ID'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   login?: Maybe<User>;
   deleteScenario?: Maybe<Scalars['Boolean']>;
   runScenario: Scalars['ID'];
+  deleteCampaign?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -128,6 +182,36 @@ export type MutationRunScenarioArgs = {
 };
 
 
+export type MutationDeleteCampaignArgs = {
+  input: Scalars['ID'];
+};
+
+
+
+export type CampaignQueryVariables = Exact<{
+  campaignId: Scalars['ID'];
+}>;
+
+
+export type CampaignQuery = (
+  { __typename?: 'Query' }
+  & { campaign?: Maybe<(
+    { __typename?: 'CampaignDetails' }
+    & Pick<CampaignDetails, 'id' | 'title' | 'description' | 'scheduleTime' | 'environment' | 'parallelRun' | 'retryAuto' | 'datasetId' | 'scenarioIds'>
+    & { campaignExecutionReports: Array<Maybe<(
+      { __typename: 'CampaignExecutionReport' }
+      & Pick<CampaignExecutionReport, 'executionId' | 'campaignName' | 'startDate' | 'status' | 'partialExecution' | 'executionEnvironment' | 'userId'>
+      & { scenarioExecutionReports: Array<Maybe<(
+        { __typename: 'ScenarioExecutionReportOutline' }
+        & Pick<ScenarioExecutionReportOutline, 'scenarioId' | 'scenarioName'>
+        & { execution: (
+          { __typename: 'ExecutionSummary' }
+          & Pick<ExecutionSummary, 'time' | 'duration' | 'status' | 'info' | 'error' | 'testCaseTitle' | 'environment' | 'datasetId' | 'datasetVersion' | 'user'>
+        ) }
+      )>> }
+    )>> }
+  )> }
+);
 
 export type CampaignsLastExecutionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -149,6 +233,16 @@ export type CampaignsQuery = (
     { __typename?: 'Campaign' }
     & Pick<Campaign, 'id' | 'title' | 'description'>
   )>>> }
+);
+
+export type DeleteCampaignMutationVariables = Exact<{
+  input: Scalars['ID'];
+}>;
+
+
+export type DeleteCampaignMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteCampaign'>
 );
 
 export type DeleteScenarioMutationVariables = Exact<{
@@ -250,6 +344,60 @@ export type UserQuery = (
   )> }
 );
 
+export const CampaignDocument = gql`
+    query campaign($campaignId: ID!) {
+  campaign(campaignId: $campaignId) @rest(type: "CampaignDetails", path: "api/ui/campaign/v1/{args.campaignId}") {
+    id
+    title
+    description
+    scheduleTime
+    environment
+    parallelRun
+    retryAuto
+    datasetId
+    scenarioIds
+    campaignExecutionReports @type(name: "CampaignExecutionReport") {
+      __typename
+      executionId
+      campaignName
+      startDate
+      status
+      partialExecution
+      executionEnvironment
+      userId
+      scenarioExecutionReports @type(name: "ScenarioExecutionReportOutline") {
+        __typename
+        scenarioId
+        scenarioName
+        execution @type(name: "ExecutionSummary") {
+          __typename
+          time
+          duration
+          status
+          info
+          error
+          testCaseTitle
+          environment
+          datasetId
+          datasetVersion
+          user
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CampaignGQL extends Apollo.Query<CampaignQuery, CampaignQueryVariables> {
+    document = CampaignDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CampaignsLastExecutionsDocument = gql`
     query campaignsLastExecutions {
   campaignsLastExecutions @rest(type: "CampaignsLastExecution", path: "api/ui/campaign/v1/lastexecutions/10") {
@@ -286,6 +434,22 @@ export const CampaignsDocument = gql`
   })
   export class CampaignsGQL extends Apollo.Query<CampaignsQuery, CampaignsQueryVariables> {
     document = CampaignsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteCampaignDocument = gql`
+    mutation deleteCampaign($input: ID!) {
+  deleteCampaign(input: $input) @rest(type: "CampaignDeleted", path: "api/ui/campaign/v1/{args.input}", method: "DELETE")
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteCampaignGQL extends Apollo.Mutation<DeleteCampaignMutation, DeleteCampaignMutationVariables> {
+    document = DeleteCampaignDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

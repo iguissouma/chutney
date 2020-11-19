@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="_campaignsDataSource">
+<table mat-table [dataSource]="campaignsDataSource">
 
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
@@ -18,10 +18,10 @@
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <button mat-icon-button>
+      <button mat-icon-button (click)="editCampaign(element.id)">
         <mat-icon class="material-icons-outlined">create</mat-icon>
       </button>
-      <button mat-icon-button>
+      <button mat-icon-button (click)="deleteCampaign(element.id)">
         <mat-icon class="material-icons-outlined">delete</mat-icon>
       </button>
     </mat-cell>

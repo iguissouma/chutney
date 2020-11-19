@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Campaign, CampaignsGQL } from '@chutney/data-access';
-import { Subject } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { Campaign } from '@chutney/data-access';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'chutney-campaigns-list',
@@ -13,29 +12,39 @@ import { pluck } from 'rxjs/operators';
 })
 
 export class CampaignsListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'title', 'description', 'action'];
-  protected _onDestroy = new Subject<void>();
-  _campaignsDataSource: MatTableDataSource<Campaign> = new MatTableDataSource<Campaign>();
-  campaigns: Campaign[];
+  @Input() set campaigns(campaigns: Campaign[]) {
+    if (!isNullOrUndefined(campaigns)) {
+      this._campaignsDataSource.data = campaigns;
+    }
+  }
 
+  @Output() edit = new EventEmitter<string>();
+  @Output() delete = new EventEmitter<string>();
+
+  displayedColumns: string[] = ['id', 'title', 'description', 'action'];
+  _campaignsDataSource: MatTableDataSource<Campaign> = new MatTableDataSource<Campaign>();
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private campaignGQL: CampaignsGQL) {
+
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.campaignGQL.watch().valueChanges.pipe(pluck('data', 'campaigns')).subscribe((result: Campaign[]) => {
-      this.campaigns = result;
-      this._campaignsDataSource.data = result;
-    })
     this._campaignsDataSource.paginator = this.paginator;
     this._campaignsDataSource.sort = this.sort;
   }
 
-  ngOnDestroy() {
-    this._onDestroy.next();
-    this._onDestroy.complete();
+  get campaignsDataSource(): MatTableDataSource<Campaign> {
+    return this._campaignsDataSource;
+  }
+
+  editCampaign(id: any) {
+    this.edit.emit(id);
+  }
+
+  deleteCampaign(id: any) {
+    this.delete.emit(id);
   }
 
 }

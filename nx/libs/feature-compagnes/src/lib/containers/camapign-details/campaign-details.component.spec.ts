@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TranslationComponent } from './translation.component';
+import { CampaignDetailsComponent } from './campaign-details.component';
 import { UiMaterialModule } from '@chutney/ui-material';
 import { UiCommonsModule } from '@chutney/ui-commons';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('TranslationComponent', () => {
-  let component: TranslationComponent;
-  let fixture: ComponentFixture<TranslationComponent>;
+describe('CampaignDetailsComponent', () => {
+  let component: CampaignDetailsComponent;
+  let fixture: ComponentFixture<CampaignDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,17 +18,16 @@ describe('TranslationComponent', () => {
         UiCommonsModule,
         CommonModule,
         ReactiveFormsModule,
-        NoopAnimationsModule,
       ],
       schemas: [
         NO_ERRORS_SCHEMA,
       ],
-      declarations: [TranslationComponent],
+      declarations: [CampaignDetailsComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TranslationComponent);
+    fixture = TestBed.createComponent(CampaignDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

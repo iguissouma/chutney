@@ -1,0 +1,14 @@
+<chutney-top-banner title="{{campaignId? 'Edit ' : 'Create new '}} campaign" icon="video_library"></chutney-top-banner>
+<div *ngIf="campaign">
+  <mat-tab-group fxLayout="column" fxFlex>
+    <mat-tab label="Details">
+      <chutney-campaign-form [campaign]="campaign"></chutney-campaign-form>
+    </mat-tab>
+    <mat-tab label="Scenarios">
+      tab2
+    </mat-tab>
+    <mat-tab label="Executions history" *ngIf="campaignId">
+      tab3
+    </mat-tab>
+  </mat-tab-group>
+</div>

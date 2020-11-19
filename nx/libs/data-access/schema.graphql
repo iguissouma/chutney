@@ -48,6 +48,49 @@ type Campaign {
   description: String!
 }
 
+type ExecutionSummary {
+  time: String!
+  duration: Int!
+  status: String!
+  info: String!
+  error: String!
+  testCaseTitle: String!
+  environment: String!
+  datasetId: String!
+  datasetVersion: String!
+  user: String!
+}
+
+type ScenarioExecutionReportOutline {
+  scenarioId: String!
+  scenarioName: String!
+  execution: ExecutionSummary!
+}
+
+type CampaignExecutionReport {
+  executionId: ID!
+  campaignName: String!
+  startDate: String!
+  status: String!
+  scenarioExecutionReports: [ScenarioExecutionReportOutline]!
+  partialExecution: Boolean!
+  executionEnvironment: String!
+  userId: String!
+}
+
+type CampaignDetails {
+  id: ID!
+  title: String!
+  description: String!
+  scheduleTime: String!
+  environment: String!
+  parallelRun: Boolean!
+  retryAuto: Boolean!
+  datasetId: String!
+  scenarioIds: [String]!
+  campaignExecutionReports: [CampaignExecutionReport]!
+}
+
 type CampaignsLastExecution {
   executionId: ID!
   campaignName: String!
@@ -63,12 +106,14 @@ type Query {
   runScenarioHistory(scenarioId: ID!, executionId: ID!): ScenarioExecution!
   campaigns: [Campaign]
   campaignsLastExecutions: [CampaignsLastExecution]
+  campaign(campaignId: ID!): CampaignDetails
 }
 
 type Mutation {
   login(input: LoginInput!): User
   deleteScenario(input: ID!): Boolean
   runScenario(scenarioId: ID!, dataset: [String] ) : ID!
+  deleteCampaign(input: ID!): Boolean
 }
 
 scalar RestFunction
